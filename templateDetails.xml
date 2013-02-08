@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="template" method="upgrade">
+    <name>Bootstrap</name>
+    <author>Daniel Eliasson - joomla at stilero.com</author>
+    <creationDate>2013-feb-08</creationDate>
+    <copyright>Copyright (c) 2013-feb-08 Stilero Webdesign http://www.stilero.com. All rights reserved.</copyright>
+    <authorEmail>joomla@stilero.com</authorEmail>
+    <authorUrl>www.stilero.com</authorUrl>
+    <version>1.0</version>
+    <license>GPLv2</license>
+    <description>Joomla Template - Bootstrap</description>
+    <files>
+        <filename>index.php</filename>
+        <filename>component.php</filename>
+        <filename>error.php</filename>
+        <filename>templateDetails.xml</filename>
+        <folder>assets</folder>
+        <folder>html</folder>
+    </files>
+    <positions>
+        <position>menu</position>
+        <position>breadcrumbs</position>
+        <position>banner</position>
+        <position>absolute</position>
+        <position>bottom-a</position>
+        <position>bottom-b</position>
+        <position>debug</position>
+        <position>footer</position>
+        <position>innerbottom</position>
+        <position>innertop</position>
+        <position>logo</position>
+        <position>search</position>
+        <position>sidebar-a</position>
+        <position>sidebar-b</position>
+        <position>toolbar-l</position>
+        <position>toolbar-r</position>
+        <position>top-a</position>
+        <position>top-b</position>
+    </positions>
+</extension>
