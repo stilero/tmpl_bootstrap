@@ -15,12 +15,12 @@
         <filename>error.php</filename>
         <filename>templateDetails.xml</filename>
         <folder>assets</folder>
+        <folder>helpers</folder>
         <folder>html</folder>
     </files>
     <positions>
         <position>menu</position>
         <position>breadcrumbs</position>
-        <position>banner</position>
         <position>absolute</position>
         <position>bottom-a</position>
         <position>bottom-b</position>
@@ -32,8 +32,7 @@
         <position>search</position>
         <position>sidebar-a</position>
         <position>sidebar-b</position>
-        <position>toolbar-l</position>
-        <position>toolbar-r</position>
+        <position>toolbar</position>
         <position>top-a</position>
         <position>top-b</position>
     </positions>

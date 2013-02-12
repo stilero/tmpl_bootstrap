@@ -8,11 +8,42 @@
 
 // No direct access.
 defined('_JEXEC') or die;
+/**
+ * Use moduleclass_suffix = well to set content in wells.
+ * @param type $module
+ * @param type $params
+ * @param type $attribs
+ */
+function modChrome_bootstrap($module, &$params, &$attribs){
+    $modCount = count(JModuleHelper::getModules($attribs['name']));
+    $spanSize = BootstrapTemplateHelper::spanSize($modCount);
+    $headerLevel = isset($attribs['headerLevel']) ? (int) $attribs['headerLevel'] : 3;
+    if (!empty ($module->content)) : ?>
+    <div class="span<?php echo $spanSize; ?> <?php echo htmlspecialchars($params->get('moduleclass_sfx'));?>">
+        <?php if ($module->showtitle) : ?>
+            <h<?php echo $headerLevel; ?>>
+                <?php echo $module->title; ?>
+            </h<?php echo $headerLevel; ?>>
+        <?php endif; //showTitle ?>
+        <?php echo $module->content; ?>
+    </div>
+    <?php endif; //Emptycheck
+}
 
-function modChrome_bootstrapError($module, &$params, &$attribs){
-    print "hej";
-        var_dump($module);
-
+function modChrome_bootstrapVertical($module, &$params, &$attribs){
+    $modCount = count(JModuleHelper::getModules($attribs['name']));
+    $spanSize = BootstrapTemplateHelper::spanSize($modCount);
+    $headerLevel = isset($attribs['headerLevel']) ? (int) $attribs['headerLevel'] : 3;
+    if (!empty ($module->content)) : ?>
+    <div class="row <?php echo htmlspecialchars($params->get('moduleclass_sfx'));?>">
+        <?php if ($module->showtitle) : ?>
+            <h<?php echo $headerLevel; ?>>
+                <?php echo $module->title; ?>
+            </h<?php echo $headerLevel; ?>>
+        <?php endif; //showTitle ?>
+        <?php echo $module->content; ?>
+    </div>
+    <?php endif; //Emptycheck
 }
 
 /**

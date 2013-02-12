@@ -11,23 +11,30 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access'); 
+JLoader::register('BootstrapTemplateHelper', JPATH_THEMES.DS.$this->template.DS.'helpers'.DS.'helper.php');
 $app = JFactory::getApplication();
 //JHtml::_('behavior.framework', true);
 $hasTop = $this->countModules('top');
 $hasLogo = $this->countModules('logo');
-$hasToolbarL = $this->countModules('toolbar-l');
-$hasToolbarR = $this->countModules('toolbar-r');
-$showToolbar = ($hasToolbarL || $hasToolbarR)? TRUE : FALSE;
-$spanLogo = 12 / ($hasLogo + $hasToolbarL + $hasToolbarR);
+$hasToolbar = $this->countModules('toolbar');
+$showToolbar = ($hasToolbar)? TRUE : FALSE;
+$spanLogo = BootstrapTemplateHelper::spanSize($hasLogo + $hasToolbar);
+$showHeader = ($hasTop || $hasLogo || $hasToolbar) ? TRUE : FALSE;
+// TOP
 $hasTopA = $this->countModules('top-a');
+$spanTopA = BootstrapTemplateHelper::spanSize($this->countModules('top-a'));
+$spanTopB = BootstrapTemplateHelper::spanSize($this->countModules('top-b'));
 $hasTopB = $this->countModules('top-b');
-$showTop = ($hasTop || $hasLogo || $hasToolbarL || $hasToolbarR || $hasTopA || $hasTopB) ? TRUE : FALSE;
+$showTop = ($hasTopA || $hasTopB) ? TRUE : FALSE;
+//HEADER
 $hasMenu = $this->countModules('menu');
 $hasBreadcrumbs = $this->countModules('breadcrumbs');
-$hasBanner = $this->countModules('banner');
 $hasInnerTop = $this->countModules('innertop');
-$hasSidebarA = $this->countModules('sidebar-a');
-$hasSidebarB = $this->countModules('sidebar-b');
+//SIDEBAR
+$hasSidebarA = $this->countModules('sidebar-a') > 0? true : false;
+$hasSidebarB = $this->countModules('sidebar-b') > 0? true : false;
+$sidebarSpan = BootstrapTemplateHelper::sidebarSpanSize($hasSidebarA, $hasSidebarB);
+$componentSpan = BootstrapTemplateHelper::$fullSpan - $sidebarSpan;
 $showSidebar = ($hasSidebarA || $hasSidebarB) ? TRUE : FALSE;
 $hasInnerBottom = $this->countModules('innerbottom');
 $hasBottomA = $this->countModules('bottom-a');
@@ -52,112 +59,107 @@ require_once JPATH_ROOT .'/templates/'. $this->template .'/html/message.php';
                 jQuery.noConflict();
         </script>
         <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/assets/js/dropdown.js"></script>
-        <?php if($showTop){ ?>
-            
-            <div class="container-fluid">
-                <?php if($hasLogo): ?>
-                    <div class="span<?php echo $spanLogo;?>">
-                        <div id="logo">
-                            <jdoc:include type="modules" name="logo" />
+        <?php if($showHeader): ?>
+            <div class="container">
+                <div class="row-fluid">
+                    <?php if($hasLogo): ?>
+                        <div class="span3">
+                            <div id="logo">
+                                <jdoc:include type="modules" name="logo" />
+                            </div>
                         </div>
-                    </div>
-                <?php endif; //endif hasLogo ?>
-                <?php if($hasToolbarL): ?>
-                    <div class="span<?php echo $spanLogo;?>">
-                        <div id="toolbar-l">
-                            <jdoc:include type="modules" name="toolbar-l" />
+                    <?php endif; //endif hasLogo ?>
+                    <?php if($hasToolbar): ?>
+                        <div class="span9">
+                            <div id="toolbar">
+                                <jdoc:include type="modules" name="toolbar" style="bootstrap" />
+                            </div>
                         </div>
-                    </div>
-                <?php endif; //endif hasLogo ?>
-                <?php if($hasToolbarR): ?>
-                    <div class="span<?php echo $spanLogo;?>">
-                        <div id="toolbar-r  ">
-                            <jdoc:include type="modules" name="toolbar-r" />
-                        </div>
-                    </div>
-                <?php endif; //endif hasLogo ?>
+                    <?php endif; //endif hasToolbar ?>
+                </div>
             </div>
-        
-        
-        <div id="top">
-             <jdoc:include type="modules" name="top" />
-
-              <?php if($hasTopA){ ?>
-             <div id="top-a">
-                  <jdoc:include type="modules" name="top-a" />
-             </div>
-             <?php } ?>
-              <?php if($hasTopB){ ?>
-             <div id="top-b">
-                  <jdoc:include type="modules" name="top-b" />
-             </div>
-             <?php } ?>
-        </div>
-        <?php }//End if showTop ?>
-        <?php if($hasMenu){ ?>
-            <div class="navbar">
-                <div class="navbar-inner">
+        <?php endif;//End if showHeader ?>
+        <?php if($hasMenu): ?>
+            <div class="container">
+                <div class="navbar">
+                    <div class="navbar-inner">
                         <jdoc:include type="modules" name="menu" />
+                    </div>
                 </div>
             </div>
-        <?php } ?>
-        <?php if($hasBreadcrumbs){ ?>
-        <div id="breadcrumbs">
-            <jdoc:include type="modules" name="breadcrumbs" />
-        </div>
-        <?php } ?>
-        <?php if($hasBanner){ ?>
-        <div id="banner">
-            <jdoc:include type="modules" name="banner" />
-        </div>
-        <?php } ?>
+        <?php endif; //Has Menu ?>
+        <?php if($showTop): ?>
+            <div class="container">
+                <div class="row-fluid">
+                    <div id="top">
+                        <?php if($hasTopA): ?>
+                            <div id="top-a">
+                                <jdoc:include type="modules" name="top-a" style="bootstrap" />
+                            </div>
+                        <?php endif;//hasTopA ?>
+                        <?php if($hasTopB): ?>
+                            <div id="top-b">
+                                <jdoc:include type="modules" name="top-b" style="bootstrap" />
+                            </div>
+                        <?php endif;//hasTopB ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif; //ShowTop ?>
+        <?php if($hasBreadcrumbs): ?>
         <div class="container">
-            <jdoc:include type="message" style="bootstrapError" />
-            <?php if($hasInnerTop){ ?>
-            <div id="innertop">
-                <jdoc:include type="modules" name="innertop" />
+            <div id="breadcrumbs">
+                <jdoc:include type="modules" name="breadcrumbs" />
             </div>
-            <?php } ?>
-            <?php if($showSidebar){ ?>
-            <div id="sidebar">
-                <?php if($hasSidebarA){ ?>
-                <div id="sidebar-a">
-                    <jdoc:include type="modules" name="sidebar-a" />
+        </div>
+        <?php endif; //hasBreadcrumbs ?>
+        <div class="container">
+            <div class="row-fluid">
+                <?php if($hasSidebarA): ?>
+                    <div class="span3">
+                        <div id="sidebar-a">
+                            <jdoc:include type="modules" name="sidebar-a" />
+                        </div>
+                    </div>
+                <?php endif; //has sidebarA ?>
+                <div class="span<?php echo $componentSpan; ?>">
+                    <?php if($hasInnerTop): ?>
+                        <div class="row">
+                            <div id="innertop">
+                                <jdoc:include type="modules" name="innertop" style="bootstrap" />
+                            </div>
+                        </div>
+                    <?php endif; //innerTop ?>
+                    <section id="contents">
+                        <jdoc:include type="message" />
+                        <jdoc:include type="component" />
+                    </section>
+                    <?php if($hasInnerBottom): ?>
+                        <div class="row">
+                            <div id="innerbottom">
+                                <jdoc:include type="modules" name="innerbottom" style="bootstrap" />
+                            </div>
+                        </div>
+                    <?php endif; //innerTop ?>
                 </div>
-                <?php } ?>
-                <?php if($hasSidebarB){ ?>
-                <div id="sidebar-b">
-                    <jdoc:include type="modules" name="sidebar-b" />
+                 <?php if($hasSidebarB): ?>
+                    <div class="span3">
+                        <div id="sidebar-b">
+                            <jdoc:include type="modules" name="sidebar-b" />
+                        </div>
+                    </div>
+                <?php endif; //has sidebarB ?>
+            </div>
+        </div>
+        <div class="container">
+            <?php if($hasFooter): ?>
+            <div class="row-fluid">
+                <div id="footer">
+                    <jdoc:include type="modules" name="footer" style="bootstrap"/>
                 </div>
-                <?php } ?>
             </div>
-            <?php } ?>
-            <jdoc:include type="component" />
-            <?php if($hasInnerBottom){ ?>
-            <div id="innerbottom">
-                <jdoc:include type="modules" name="innerbottom" />
-            </div>
-            <?php } ?>
+            <?php endif; //footer ?>
         </div>
-        <?php if($showBottom){ ?>
-        <div id="bottom">
-            <?php if($hasBottomA){ ?>
-           <div id="bottom-a">
-            <jdoc:include type="modules" name="bottom-a" />
-            </div>
-            <?php } ?>
-            <?php if($hasBottomB){ ?>
-            <div id="bottom-b">
-                <jdoc:include type="modules" name="bottom-b" />
-            </div> 
-            <?php } ?>
-        </div>
-        <?php } ?>
-        <?php if($hasFooter){ ?>
-        <div id="footer">
-            <jdoc:include type="modules" name="footer" />
-        </div>
-        <?php }?>
         <jdoc:include type="modules" name="debug" />
     </body>
 </html>
