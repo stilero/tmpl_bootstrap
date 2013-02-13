@@ -11,7 +11,8 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access'); 
-JLoader::register('BootstrapTemplateHelper', JPATH_THEMES.DS.$this->template.DS.'helpers'.DS.'helper.php');
+define('BOOTSTRAP_TEMPLATE_PATH', JPATH_THEMES.DS.$this->template.DS);
+JLoader::register('BootstrapTemplateHelper', BOOTSTRAP_TEMPLATE_PATH.'helpers'.DS.'helper.php');
 $app = JFactory::getApplication();
 //JHtml::_('behavior.framework', true);
 $hasTop = $this->countModules('top');
@@ -50,7 +51,7 @@ require_once JPATH_ROOT .'/templates/'. $this->template .'/html/message.php';
         <meta charset="utf-8">
         <jdoc:include type="head" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/assets/css/bootstrap.css" type="text/css" />
+        <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/assets/css/template.css" type="text/css" />
     </head>
     <body>
          <script src="http://code.jquery.com/jquery.js"></script>

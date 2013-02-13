@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
-JLoader::register('BootstrapTemplateHelper', JPATH_THEMES.DS.'pcmmarine'.DS.'helpers'.DS.'helper.php');
+JLoader::register('BootstrapTemplateHelper', BOOTSTRAP_TEMPLATE_PATH.'helpers'.DS.'helper.php');
 
 // If the page class is defined, add to class as suffix.
 // It will be a separate class if the user starts it with a space
